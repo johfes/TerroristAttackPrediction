@@ -1,7 +1,6 @@
 package biz.fesenmeyer;
 
-import javax.annotation.Generated;
-
+import java.util.Scanner;
 import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPAdministrator;
 import com.espertech.esper.client.EPRuntime;
@@ -9,10 +8,15 @@ import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 
-public class Start {
-	static final int EVENT_NUMBER = 20;
+public class Main {
+	private static int eventNumber;
 	
 	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		System.out.println("Wieviele Ereignisse sollen generiert werden?");
+		eventNumber = s.nextInt();
+		s.close();
+		
 	    Configuration cepConfig = new Configuration();
 	    // register objects the engine will have to handle
 	    cepConfig.addEventType("VehicleAtSameLocation",
@@ -43,7 +47,7 @@ public class Start {
 		cepStatement2.addListener(new ThreatListener());
 		cepStatement3.addListener(new ThreatListener());
 		
-		for(int i=0; i<=EVENT_NUMBER; i++){
+		for(int i=0; i<=eventNumber; i++){
 			EventGenerator.generateEvent(cepRT);
 		}
 	}
